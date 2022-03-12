@@ -1,0 +1,5 @@
+name: VacuumShulkerBox
+version: '${project.version}'
+main: qub.vacuumshulkerbox.VacuumShulkerBox
+api-version: 1.18
+description: Items will now go straight to a ShulkerBox with a similar stack of items
