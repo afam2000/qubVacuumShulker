@@ -14,6 +14,7 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -64,11 +65,13 @@ public final class VacuumShulkerBox extends JavaPlugin implements Listener {
     public void onItemPickup(EntityPickupItemEvent ev) {
         if (ev.getEntity() instanceof Player) {
             Player player = (Player) ev.getEntity();
+            PlayerInventory playerInventory = player.getInventory();
+            ItemStack itemStack = ev.getItem().getItemStack();
 
-            if (player.getOpenInventory().getType() != InventoryType.SHULKER_BOX     // Bypass if currently using shulker
-            && hasShulker(player.getInventory()))
+            if (playerInventory.getType() != InventoryType.SHULKER_BOX     // Bypass if currently using shulker
+            && hasShulker(playerInventory)
+            && !playerInventory.contains(itemStack.getType()))
             {
-                ItemStack itemStack = ev.getItem().getItemStack();
                 int maxStackSize = itemStack.getMaxStackSize();
                 int pickupLeft = itemStack.getAmount();
                 for (ItemStack i : player.getInventory().getContents()) {
